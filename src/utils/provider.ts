@@ -240,7 +240,7 @@ export default defineEventHandler(async (event) => {
 }
 
 export function localAuthorizeGrant(opt: any): string {
-return `import { defineEventHandler, readBody, createError, getCookie } from 'h3'
+return `import { defineEventHandler, readBody, createError, getCookie, getRequestHeader } from 'h3'
 // @ts-expect-error: virtual file
 import { config } from '#nuxt-auth-options'
 import { serialize } from 'cookie-es'
@@ -262,6 +262,7 @@ export default defineEventHandler(async (event) => {
     const refreshTokenDataName = options.strategy.refreshToken.data
     const tokenCookieName = config.stores.cookie.prefix + options.strategy?.token?.prefix + options.strategy.name
     const serverRefreshToken = getCookie(event, refreshCookieName)
+    const authHeader = getRequestHeader(event, 'authorization')
 
     // Grant type is refresh token, but refresh token is not available
     if ((requestBody.grant_type === 'refresh_token' && !options.strategy.refreshToken.httpOnly && !requestBody[refreshTokenDataName]) || (requestBody.grant_type === 'refresh_token' && options.strategy.refreshToken.httpOnly && !serverRefreshToken)) {
@@ -280,13 +281,21 @@ export default defineEventHandler(async (event) => {
         delete body[refreshTokenDataName]
     }
 
-    const headers = {
+    let headers = {
         'Content-Type': 'application/json'
     }
 
     let response
 
     if (body[refreshTokenDataName]) {
+        if (options.strategy?.refreshToken?.tokenRequired && authHeader) {
+            headers = {
+                ...headers,
+                // @ts-ignore
+                Authorization: authHeader,
+            }
+        }
+
         response = await $http.post(options.refreshEndpoint, {
             body,
             headers: {
