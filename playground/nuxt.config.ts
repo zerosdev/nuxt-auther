@@ -6,7 +6,6 @@ export default defineNuxtConfig({
         "@nuxt-alt/http",
         "@nuxt-alt/proxy",
         "@nuxtjs/i18n",
-        '@nuxt/ui'
     ],
     auth: {
         strategies: {

@@ -3,6 +3,7 @@ import { existsSync, promises as fsp } from 'node:fs'
 import { pathToFileURL } from 'node:url'
 import { resolve } from 'node:path'
 import { defineCommand } from 'citty'
+import { build } from 'unbuild'
 
 export default defineCommand({
     meta: {
@@ -30,8 +31,6 @@ export default defineCommand({
         }
     },
     async run(context) {
-        const { build } = await import('unbuild')
-
         const cwd = resolve(context.args.cwd || context.args.rootDir || '.')
 
         const outDir = context.args.outDir || 'dist'
