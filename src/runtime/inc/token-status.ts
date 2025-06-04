@@ -37,7 +37,7 @@ export class TokenStatus {
         }
 
         // Give us some slack to help the token from expiring between validation and usage
-        const timeSlackMillis = 500;
+        const timeSlackMillis = 60000; // 60 seconds
         tokenExpiresAt -= timeSlackMillis;
 
         // Token is still valid
