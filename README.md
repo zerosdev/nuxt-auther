@@ -1,28 +1,28 @@
-<h1 align="center">Auth</h1>
-<p align="center">Alternative Auth module for Nuxt</p>
+<h1 align="center">Nuxt-Auther</h1>
+<p align="center">Authentication module for Nuxt.JS</p>
 
 <p align="center">
-<a href="https://www.npmjs.com/package/@nuxt-alt/auth">
-    <img alt="" src="https://img.shields.io/npm/v/@nuxt-alt/auth.svg?style=flat&colorA=18181B&colorB=28CF8D">
+<a href="https://www.npmjs.com/package/nuxt-auther">
+    <img alt="" src="https://img.shields.io/npm/v/nuxt-auther.svg?style=flat&colorA=18181B&colorB=28CF8D">
 </a>
-<a href="https://www.npmjs.com/package/@nuxt-alt/auth">
-    <img alt="" src="https://img.shields.io/npm/dt/@nuxt-alt/auth.svg?style=flat&colorA=18181B&colorB=28CF8D">
+<a href="https://www.npmjs.com/package/nuxt-auther">
+    <img alt="" src="https://img.shields.io/npm/dt/nuxt-auther.svg?style=flat&colorA=18181B&colorB=28CF8D">
 </a>
 </p>
 
 ## Info
 
-This module is meant as an alternative to @nuxtjs/auth, except this is for nuxt3 only with no backwards compatibility support.
+This module is meant as an alternative to @nuxtjs/auth, except this is for Nuxt 3 only with no backwards compatibility support.
 
 ## Setup
 
-1. Add `@nuxt-alt/auth` and `@nuxt-alt/http` dependency to your project
+1. Add `nuxt-auther` and `@nuxt-alt/http` dependency to your project
 
 ```bash
-yarn add @nuxt-alt/auth @nuxt-alt/http
+yarn add nuxt-auther @nuxt-alt/http
 ```
 
-2. Add `@nuxt-alt/auth` and `@pinia/nuxt` to the `modules` section of `nuxt.config.ts`
+2. Add `nuxt-auther` and `@pinia/nuxt` to the `modules` section of `nuxt.config.ts`
 
 **Note:** you dont need to specify `@nuxt-alt/http`, it will automatically be added but if you want to manually add it, make sure it is below the auth module (and above the proxy module if you are using it). It also doesn't need pinia
 it will use nuxt's `useState` by default.
@@ -30,7 +30,7 @@ it will use nuxt's `useState` by default.
 ```ts
 export default defineNuxtConfig({
     modules: [
-        '@nuxt-alt/auth'
+        'nuxt-auther'
     ],
     auth: {
         /* module options */
@@ -40,7 +40,7 @@ export default defineNuxtConfig({
 ```
 
 ## Documentation
-[Read Documentation](https://nuxt-alt-auth.vercel.app)
+[Read Documentation](https://nuxt-auther.vercel.app)
 
 ## Changes 
 
@@ -168,7 +168,7 @@ auth: {
 ## TypeScript (2.6.0+)
 The user information can be edited like so for TypeScript:
 ```ts
-declare module '@nuxt-alt/auth' {
+declare module 'nuxt-auther' {
     interface UserInfo {
         email: string
         name: string
