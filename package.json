@@ -31,9 +31,7 @@
     ],
     "scripts": {
         "dev": "nuxi dev playground",
-        "dev:build": "nuxi build playground",
-        "dev:prepare": "JITI_ESM_RESOLVE=1 jiti ./commands/cli.ts build --stub && JITI_ESM_RESOLVE=1 jiti ./commands/cli.ts prepare",
-        "prepack": "JITI_ESM_RESOLVE=1 jiti ./commands/cli.ts build"
+        "dev:build": "nuxi build playground"
     },
     "dependencies": {
         "@nuxt-alt/http": "latest",
@@ -67,5 +65,6 @@
     },
     "publishConfig": {
         "access": "public"
-    }
+    },
+    "packageManager": "yarn@4.9.2"
 }
