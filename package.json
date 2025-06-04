@@ -1,0 +1,71 @@
+{
+    "name": "nuxt-auther",
+    "version": "1.0.0",
+    "description": "Authentication module for Nuxt.JS",
+    "homepage": "https://github.com/zerosdev/nuxt-auther",
+    "author": "zerosdev",
+    "keywords": [
+        "auth",
+        "nuxt",
+        "nuxt3",
+        "nuxtjs",
+        "nuxt-module",
+        "nuxt-plugin",
+        "@nuxtjs/auth",
+        "@nuxt-alt/auth"
+    ],
+    "license": "MIT",
+    "type": "module",
+    "exports": {
+        ".": {
+            "types": "./dist/types/index.d.ts",
+            "import": "./dist/module.mjs",
+            "require": "./dist/module.cjs"
+        }
+    },
+    "main": "./dist/module.cjs",
+    "module": "./dist/module.mjs",
+    "types": "./dist/types/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "dev": "nuxi dev playground",
+        "dev:build": "nuxi build playground",
+        "dev:prepare": "JITI_ESM_RESOLVE=1 jiti ./commands/cli.ts build --stub && JITI_ESM_RESOLVE=1 jiti ./commands/cli.ts prepare",
+        "prepack": "JITI_ESM_RESOLVE=1 jiti ./commands/cli.ts build"
+    },
+    "dependencies": {
+        "@nuxt-alt/http": "latest",
+        "@nuxt/kit": "^3.12.2",
+        "@refactorjs/serialize": "latest",
+        "cookie-es": "^1.1.0",
+        "defu": "^6.1.3",
+        "jwt-decode": "^4.0.0",
+        "ohash": "^1.1.3",
+        "pathe": "^1.1.2",
+        "pinia": "^2.1.7",
+        "requrl": "^3.0.2"
+    },
+    "devDependencies": {
+        "@nuxt-alt/proxy": "^2.5.8",
+        "@nuxt/schema": "^3.12.2",
+        "@nuxtjs/i18n": "next",
+        "@types/node": "^20",
+        "jiti": "^1.21.6",
+        "nuxt": "^3.9.3",
+        "typescript": "5.3.3",
+        "unbuild": "^2.0.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/zerosdev/nuxt-auther.git",
+        "directory": "nuxt-auther"
+    },
+    "bugs": {
+        "url": "https://github.com/zerosdev/nuxt-auther/issues"
+    },
+    "publishConfig": {
+        "access": "public"
+    }
+}
