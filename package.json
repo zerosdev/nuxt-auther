@@ -1,6 +1,6 @@
 {
     "name": "nuxt-auther",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "Authentication module for Nuxt.JS",
     "homepage": "https://github.com/zerosdev/nuxt-auther",
     "author": "zerosdev",
