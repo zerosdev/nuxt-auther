@@ -211,6 +211,8 @@ export default defineEventHandler(async (event) => {
 
     let cookies = event.node.res.getHeader('Set-Cookie') as string[] || [];
 
+    cookies = Array.isArray(cookies) ? cookies : cookies ? [cookies] : [];
+
     const refreshCookieValue = response._data?.[options.strategy?.refreshToken?.property]
     if (config.stores.cookie.enabled && refreshCookieValue && options.strategy.refreshToken.httpOnly) {
         const refreshCookie = serialize(refreshCookieName, refreshCookieValue, { ...config.stores.cookie.options, httpOnly: true })
@@ -316,6 +318,8 @@ export default defineEventHandler(async (event) => {
     }
 
     let cookies = event.node.res.getHeader('Set-Cookie') as string[] || [];
+
+    cookies = Array.isArray(cookies) ? cookies : cookies ? [cookies] : [];
 
     const refreshCookieValue = response._data?.[options.strategy?.refreshToken?.property]
     if (config.stores.cookie.enabled && refreshCookieValue && options.strategy.refreshToken.httpOnly) {
