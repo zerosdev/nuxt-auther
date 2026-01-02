@@ -131,10 +131,10 @@ export function assignAbsoluteEndpoints<SOptions extends StrategyOptions<(Tokena
 
 export function authorizeGrant(opt: any): string {
 return `import { defineEventHandler, readBody, createError, getCookie } from 'h3'
-// @ts-expect-error: virtual file 
+// @ts-expect-error: virtual file
+import { config } from '#nuxt-auth-options' 
 import { serialize } from 'cookie-es'
 
-const config = useRuntimeConfig().auth
 const options = ${serialize(opt, { space: 4 })}
 
 function addTokenPrefix(token, tokenType) {
@@ -244,9 +244,9 @@ export default defineEventHandler(async (event) => {
 export function localAuthorizeGrant(opt: any): string {
 return `import { defineEventHandler, readBody, createError, getCookie, getRequestHeader } from 'h3'
 // @ts-expect-error: virtual file
+import { config } from '#nuxt-auth-options'
 import { serialize } from 'cookie-es'
 
-const config = useRuntimeConfig().auth
 const options = ${serialize(opt, { space: 4 })}
 
 function addTokenPrefix(token, tokenType) {
