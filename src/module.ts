@@ -36,6 +36,13 @@ export default defineNuxtModule({
         // Merge all option sources
         const options = defu(nuxt.options.runtimeConfig[CONFIG_KEY] as ModuleOptions, moduleOptions, moduleDefaults) as ModuleOptions
 
+        nuxt.options.runtimeConfig[CONFIG_KEY] = defu(
+            nuxt.options.runtimeConfig[CONFIG_KEY],
+            {
+                stores: options.stores
+            }
+        )
+
         // Resolve strategies
         const { strategies, strategyScheme } = await resolveStrategies(nuxt, options);
         delete options.strategies;

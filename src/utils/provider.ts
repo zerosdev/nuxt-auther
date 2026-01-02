@@ -28,7 +28,7 @@ export function addAuthorize<SOptions extends StrategyOptions<Oauth2SchemeOption
     strategy.responseType = 'code';
 
     addTemplate({
-        filename: `authorize-${strategy.name}.ts`,
+        filename: `authorize-${strategy.name}.js`,
         write: true,
         getContents: () => authorizeGrant({
             strategy,
@@ -43,7 +43,7 @@ export function addAuthorize<SOptions extends StrategyOptions<Oauth2SchemeOption
     addServerHandler({
         route: endpoint,
         method: 'post',
-        handler: join(nuxt.options.buildDir, `authorize-${strategy.name}.ts`),
+        handler: join(nuxt.options.buildDir, `authorize-${strategy.name}.js`),
     })
 }
 
@@ -57,7 +57,7 @@ export function addLocalAuthorize<SOptions extends StrategyOptions<RefreshScheme
     strategy.endpoints!.refresh!.url = endpoint;
 
     addTemplate({
-        filename: `local-${strategy.name}.ts`,
+        filename: `local-${strategy.name}.js`,
         write: true,
         getContents: () => localAuthorizeGrant({
             strategy,
@@ -69,7 +69,7 @@ export function addLocalAuthorize<SOptions extends StrategyOptions<RefreshScheme
     addServerHandler({
         route: endpoint,
         method: 'post',
-        handler: join(nuxt.options.buildDir, `local-${strategy.name}.ts`),
+        handler: join(nuxt.options.buildDir, `local-${strategy.name}.js`),
     })
 }
 
@@ -88,7 +88,7 @@ export function initializePasswordGrantFlow<SOptions extends StrategyOptions<Ref
     strategy.endpoints!.refresh!.url = endpoint;
 
     addTemplate({
-        filename: `password-${strategy.name}.ts`,
+        filename: `password-${strategy.name}.js`,
         write: true,
         getContents: () => passwordGrant({
             strategy,
@@ -101,7 +101,7 @@ export function initializePasswordGrantFlow<SOptions extends StrategyOptions<Ref
     addServerHandler({
         route: endpoint,
         method: 'post',
-        handler: join(nuxt.options.buildDir, `password-${strategy.name}.ts`),
+        handler: join(nuxt.options.buildDir, `password-${strategy.name}.js`),
     })
 }
 
@@ -132,12 +132,12 @@ export function assignAbsoluteEndpoints<SOptions extends StrategyOptions<(Tokena
 export function authorizeGrant(opt: any): string {
 return `import { defineEventHandler, readBody, createError, getCookie } from 'h3'
 // @ts-expect-error: virtual file 
-import { config } from '#nuxt-auth-options'
 import { serialize } from 'cookie-es'
 
+const config = useRuntimeConfig().auth
 const options = ${serialize(opt, { space: 4 })}
 
-function addTokenPrefix(token: string | boolean, tokenType: string | false): string | boolean {
+function addTokenPrefix(token, tokenType) {
     if (!token || !tokenType || typeof token !== 'string' || token.startsWith(tokenType)) {
         return token;
     }
@@ -209,7 +209,7 @@ export default defineEventHandler(async (event) => {
         headers
     })
 
-    let cookies = event.node.res.getHeader('Set-Cookie') as string[] || [];
+    let cookies = event.node.res.getHeader('Set-Cookie') || [];
 
     cookies = Array.isArray(cookies) ? cookies : cookies ? [cookies] : [];
 
@@ -221,7 +221,7 @@ export default defineEventHandler(async (event) => {
 
     const tokenCookieValue = response._data?.[options.strategy?.token?.property]
     if (config.stores.cookie.enabled && tokenCookieValue && options.strategy.token.httpOnly) {
-        const token = addTokenPrefix(tokenCookieValue, options.strategy.token.type) as string
+        const token = addTokenPrefix(tokenCookieValue, options.strategy.token.type)
         const tokenCookie = serialize(tokenCookieName, token, { ...config.stores.cookie.options, httpOnly: true })
         cookies.push(tokenCookie);
     }
@@ -244,12 +244,12 @@ export default defineEventHandler(async (event) => {
 export function localAuthorizeGrant(opt: any): string {
 return `import { defineEventHandler, readBody, createError, getCookie, getRequestHeader } from 'h3'
 // @ts-expect-error: virtual file
-import { config } from '#nuxt-auth-options'
 import { serialize } from 'cookie-es'
 
+const config = useRuntimeConfig().auth
 const options = ${serialize(opt, { space: 4 })}
 
-function addTokenPrefix(token: string | boolean, tokenType: string | false): string | boolean {
+function addTokenPrefix(token, tokenType) {
     if (!token || !tokenType || typeof token !== 'string' || token.startsWith(tokenType)) {
         return token;
     }
@@ -317,7 +317,7 @@ export default defineEventHandler(async (event) => {
         })
     }
 
-    let cookies = event.node.res.getHeader('Set-Cookie') as string[] || [];
+    let cookies = event.node.res.getHeader('Set-Cookie') || [];
 
     cookies = Array.isArray(cookies) ? cookies : cookies ? [cookies] : [];
 
@@ -329,7 +329,7 @@ export default defineEventHandler(async (event) => {
 
     const tokenCookieValue = response._data?.[options.strategy?.token?.property]
     if (config.stores.cookie.enabled && tokenCookieValue && options.strategy.token.httpOnly) {
-        const token = addTokenPrefix(tokenCookieValue, options.strategy.token.type) as string
+        const token = addTokenPrefix(tokenCookieValue, options.strategy.token.type)
         const tokenCookie = serialize(tokenCookieName, token, { ...config.stores.cookie.options, httpOnly: true })
         cookies.push(tokenCookie);
     }
